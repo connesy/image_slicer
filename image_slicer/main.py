@@ -142,7 +142,8 @@ def validate_image_col_row(image, col, row):
 
 
 def slice(
-    filename,
+    filename=None,
+    image=None,
     number_tiles=None,
     col=None,
     row=None,
@@ -154,6 +155,7 @@ def slice(
 
     Args:
        filename (str):  The filename of the image to split.
+       image (Image.Image, None): A loaded PIL image to split.
        number_tiles (int):  The number of tiles required.
 
     Kwargs:
@@ -167,7 +169,10 @@ def slice(
     if DecompressionBombWarning is False:
         Image.MAX_IMAGE_PIXELS = None
 
-    im = Image.open(filename)
+    if image is None:
+        im = Image.open(filename)
+    else:
+        im = image
     im_w, im_h = im.size
 
     columns = 0
